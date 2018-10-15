@@ -31,5 +31,6 @@ func handleCompanies(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	w.Header().Add("Content-Type", "application/json")
 	w.Write(comp)
 }
