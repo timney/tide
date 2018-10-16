@@ -42,6 +42,7 @@ func readAccessToken() Token {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	var tokens Token
 	ferr := json.Unmarshal(file, &tokens)
 	if ferr != nil {
