@@ -4,10 +4,15 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 )
 
 func startServer() {
-	http.HandleFunc("/", handleAuthCode)
+	dir, _ := os.Getwd()
+	fs := http.FileServer(http.Dir(filepath.Join(dir, "web", "dist")))
+	http.Handle("/", fs)
+	http.HandleFunc("/code", handleAuthCode)
 	http.HandleFunc("/companies", handleCompanies)
 	http.HandleFunc("/accounts", handleAccounts)
 	http.HandleFunc("/transactions", handleTransactions)
@@ -21,7 +26,11 @@ func handleAuthCode(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 	}
 	code := r.Form.Get("code")
-
+	if len(code) < 1 {
+		w.WriteHeader(400)
+		log.Println("Missing code")
+		return
+	}
 	log.Println(code)
 
 	getAccessToken(code)
