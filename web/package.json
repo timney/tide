@@ -1,7 +1,7 @@
 {
-  "name": "web",
+  "name": "tide_web",
   "version": "1.0.0",
-  "description": "Describe web here",
+  "description": "Tide web dashboard",
   "private": true,
   "scripts": {
     "build": "nwb build-react-app",
@@ -12,13 +12,20 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "@material-ui/core": "^3.2.2",
+    "mobx": "^5.5.0",
+    "mobx-react": "^5.3.1",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "recompose": "^0.30.0",
+    "superagent": "^4.0.0-beta.5"
   },
   "devDependencies": {
     "nwb": "0.23.x"
   },
-  "author": "",
+  "author": "Andrew Timney",
   "license": "MIT",
-  "repository": ""
+  "repository": "http://github.com/timney/tide"
 }

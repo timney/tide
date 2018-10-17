@@ -11,7 +11,11 @@ import (
 func startServer() {
 	dir, _ := os.Getwd()
 	fs := http.FileServer(http.Dir(filepath.Join(dir, "web", "dist")))
-	http.Handle("/", fs)
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Println(filepath.Join(dir, "web", "dist", "index.html"))
+		http.ServeFile(w, r, filepath.Join(dir, "web", "dist", "index.html"))
+	})
 	http.HandleFunc("/code", handleAuthCode)
 	http.HandleFunc("/companies", handleCompanies)
 	http.HandleFunc("/accounts", handleAccounts)
@@ -27,7 +31,7 @@ func handleAuthCode(w http.ResponseWriter, r *http.Request) {
 	}
 	code := r.Form.Get("code")
 	if len(code) < 1 {
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		log.Println("Missing code")
 		return
 	}

@@ -7,16 +7,17 @@ import (
 	"net/http"
 )
 
-const token_url = "https://api.tide.co/tide-backend/rest/api/v1/oauth2/tokens?code="
-const companies_url = "https://api.tide.co/tide-backend/rest/api/v1/external/companies"
-const accounts_url = "https://api.tide.co/tide-backend/rest/api/v1/external/companies/{company_id}/accounts"
+const base_api = "https://api.tide.co/tide-backend/rest/api/v1"
+const token_url = base_api + "/oauth2/tokens?code="
+const companies_url = base_api + "/external/companies"
+const accounts_url = base_api + "/external/companies/{company_id}/accounts"
 
 func getAccountsUrl(company_id string) string {
-	return "https://api.tide.co/tide-backend/rest/api/v1/external/companies/" + company_id + "/accounts"
+	return base_api + "/external/companies/" + company_id + "/accounts"
 }
 
 func getTransactionsUrl(account_id string) string {
-	return "https://api.tide.co/tide-backend/rest/api/v1/external/accounts/" + account_id + "/transactions"
+	return base_api + "/external/accounts/" + account_id + "/transactions"
 }
 
 type Token struct {
