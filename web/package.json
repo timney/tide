@@ -1,6 +1,6 @@
 {
   "name": "tide_web",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Tide web dashboard",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "@elastic/eui": "^4.5.2",
     "@material-ui/core": "^3.2.2",
     "mobx": "^5.5.0",
     "mobx-react": "^5.3.1",
