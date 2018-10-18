@@ -1,0 +1,10 @@
+
+.company {
+    display: flex;
+}
+
+.card {
+    padding: 1em;
+    min-width: 300px;
+    border: 1px solid grey;
+}

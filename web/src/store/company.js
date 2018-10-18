@@ -10,7 +10,7 @@ export class CompanyStore {
 
     getCompanies() {
         request
-            .get('/companies')
+            .get('http://localhost:8899/companies')
             .then(res => res.body.forEach(d => this.companies.push(d)))
     }
 }

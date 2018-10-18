@@ -47,6 +47,7 @@ func handleCompanies(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	w.Header().Add("Content-Type", "application/json")
+	enableCors(&w)
 	w.Write(comp)
 }
 
@@ -78,4 +79,8 @@ func handleTransactions(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Add("Content-Type", "application/json")
 	w.Write(transactions)
+}
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
