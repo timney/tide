@@ -2,14 +2,17 @@ import { observable, action, computed } from 'mobx'
 import request from 'superagent'
 
 export class AccountStore {
+    rootStore
     accounts = observable.array([])
 
-    constructor(){
+    constructor(rootstore){
+        this.rootStore = rootstore
     }
 
     getAccounts(companyId) {
+        this.accounts.clear()
         request
-            .get('http://localhost:8899/accounts?companyId='+companyId)
+            .get(this.rootStore.base+'/accounts?companyId='+companyId)
             .then(res => res.body.forEach(d => this.accounts.push(d)))
     }
 }

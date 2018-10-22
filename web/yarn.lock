@@ -40,6 +40,16 @@
     classnames "^2.2"
     tslib "^1.9.0"
 
+"@blueprintjs/table@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/table/-/table-3.2.0.tgz#2d8933da9a2943bf2e7787044758cc1bd981ad67"
+  integrity sha512-a8ZrRM3+9ZLitnx48k52lVs7VYKa3WFDm7VmuiVDNe37dhUu8ls/PU1GObv2ezFd6VjLTULEstSc78SdXLYbjQ==
+  dependencies:
+    "@blueprintjs/core" "^3.7.0"
+    classnames "^2.2"
+    prop-types "^15.6.0"
+    tslib "^1.9.0"
+
 "@elastic/eui@^4.5.2":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@elastic/eui/-/eui-4.5.2.tgz#0020b294a1e415f95c258b7f9e1b4c41527d0ee5"

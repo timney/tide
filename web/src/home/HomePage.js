@@ -3,6 +3,8 @@
 
   import { Header } from "./Header"
   import { CompanyPage } from "../company/CompanyPage"
+  import { AccountPage } from '../account/AccountPage'
+  import { TransactionPage } from '../transaction/TransactionPage'
 
   import './HomePage.css'
 
@@ -10,6 +12,8 @@
     <div className="home">
       <Header />
       <CompanyPage />
+      <AccountPage />
+      <TransactionPage />
     </div>
   )
 
