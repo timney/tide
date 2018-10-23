@@ -1,27 +1,40 @@
 import React from 'react'
 import { observer, inject } from "mobx-react"
-import { H4, H5, Card } from '@blueprintjs/core'
+import { H4 } from '@blueprintjs/core'
 import { compose, mapProps } from 'recompose'
-import { Column, Table, Cell } from "@blueprintjs/table";
+import { Column, Table, Cell, ColumnHeaderCell } from "@blueprintjs/table";
  
+
+const date = (transactions) => (index) => (
+    <Cell>{transactions[index].isoTransactionDateTime}</Cell>
+)
+
 const amount = (transactions) => (index) => (
     <Cell>{transactions[index].amount}</Cell>
 )
 
+const type = (transactions) => (index) => (
+    <Cell>{transactions[index].type}</Cell>
+)
+
+const desc = (transactions) => (index) => (
+    <Cell style={{ minWidth: '300px' }}>{transactions[index].description}</Cell>
+)
+
+const descHeader = () => <ColumnHeaderCell name={"Description"} />
+
+
 export const Transaction = ({ transactions }) => (
     <div>
         <H4>Transactions</H4>
-        <Table className="transaction" numRows={transactions.length}>
-            {transactions.map(t => {
-                const am = () => <Cell>{t.amount}</Cell>
-                const pyi = () => <Cell>{t.pyi}</Cell>
-                const desc = () => <Cell>{t.description}</Cell>
-                return [
-                    <Column name="amount" cellRenderer={am} />,
-                    <Column name="pyi" cellRenderer={pyi} />,
-                    <Column name="description" cellRenderer={desc} />,
-                ]
-            })}
+        <Table 
+            className="transaction" 
+            numRows={transactions.length}
+            columnWidths={[150, 150, 150, 300]}>
+            <Column name="Date" cellRenderer={date(transactions)} />
+            <Column name="Amount" cellRenderer={amount(transactions)} />
+            <Column name="Type" cellRenderer={type(transactions)} />
+            <Column columnHeaderCellRenderer={descHeader} cellRenderer={desc(transactions)} />
         </Table>
     </div>
 )
