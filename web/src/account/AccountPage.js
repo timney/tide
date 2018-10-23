@@ -3,6 +3,7 @@ import { observer, inject } from "mobx-react"
 import { H4, H5, Card, Button } from '@blueprintjs/core'
 import { compose, mapProps, branch, renderNothing } from 'recompose'
 
+import { AccountView } from './AccountView'
 import './AccountPage.css'
 
 export const Account = ({ accounts, getTransactions }) => (
@@ -10,13 +11,11 @@ export const Account = ({ accounts, getTransactions }) => (
     <H4>Accounts</H4>
     <div className="account">
       {accounts.map(a => (
-        <Card interactive key={a.accountId}>
-            <H5>{a.name}</H5>
-            <p>{a.balance}</p>
-            <Button onClick={() => getTransactions(a.accountId)}>
-              Go
-            </Button>
-        </Card>
+        <AccountView 
+          key={a.accountId}
+          account={a}
+          viewClick={getTransactions(a.accountId)}
+        />
       ))}
     </div>
   </div>
@@ -24,11 +23,15 @@ export const Account = ({ accounts, getTransactions }) => (
 
 const enhance = compose(
   inject('store'),
+  branch(
+    ({ store }) => store.accountStore.accounts.length === 0,
+    renderNothing
+  ),
   mapProps(({ store }) => ({
     accounts: store.accountStore.accounts,
-    hasAccounts: store.accountStore.accounts.length > 0,
-    getTransactions: e => store.transactionStore.getTransactions(e)
+    getTransactions: e => () => store.transactionStore.getTransactions(e)
   })),
+  
   observer,
 )
 

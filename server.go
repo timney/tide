@@ -36,19 +36,25 @@ func handleAuthCode(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Println(code)
-
 	getAccessToken(code)
 }
 
+var companies []byte
+var accountsMap map[string][]byte
+var transactionsMap map[string][]byte
+
 func handleCompanies(w http.ResponseWriter, r *http.Request) {
-	companies := getCompanies()
-	comp, err := ioutil.ReadAll(companies)
-	if err != nil {
-		log.Fatal(err)
+	companiesReader := getCompanies()
+	if companies == nil {
+		var err error
+		companies, err = ioutil.ReadAll(companiesReader)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	w.Header().Add("Content-Type", "application/json")
 	enableCors(&w)
-	w.Write(comp)
+	w.Write(companies)
 }
 
 func handleAccounts(w http.ResponseWriter, r *http.Request) {
@@ -57,14 +63,20 @@ func handleAccounts(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 	}
 	company_id := r.Form.Get("companyId")
+	if accountsMap == nil {
+		accountsMap = make(map[string][]byte)
+	}
 
-	accounts, err := ioutil.ReadAll(getAccounts(company_id))
-	if err != nil {
-		log.Fatal(err)
+	if accountsMap[company_id] == nil {
+		accounts, err := ioutil.ReadAll(getAccounts(company_id))
+		if err != nil {
+			log.Fatal(err)
+		}
+		accountsMap[company_id] = accounts
 	}
 	w.Header().Add("Content-Type", "application/json")
 	enableCors(&w)
-	w.Write(accounts)
+	w.Write(accountsMap[company_id])
 }
 
 func handleTransactions(w http.ResponseWriter, r *http.Request) {
@@ -73,14 +85,19 @@ func handleTransactions(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 	}
 	account_id := r.Form.Get("accountId")
-
-	transactions, err := ioutil.ReadAll(getTransactions(account_id))
-	if err != nil {
-		log.Fatal(err)
+	if transactionsMap == nil {
+		transactionsMap = make(map[string][]byte)
+	}
+	if accountsMap[account_id] == nil {
+		transactions, err := ioutil.ReadAll(getTransactions(account_id))
+		if err != nil {
+			log.Fatal(err)
+		}
+		accountsMap[account_id] = transactions
 	}
 	w.Header().Add("Content-Type", "application/json")
 	enableCors(&w)
-	w.Write(transactions)
+	w.Write(accountsMap[account_id])
 }
 
 func enableCors(w *http.ResponseWriter) {
