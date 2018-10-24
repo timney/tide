@@ -6,7 +6,7 @@ import { Column, Table, Cell, ColumnHeaderCell } from "@blueprintjs/table";
  
 
 const date = (transactions) => (index) => (
-    <Cell>{transactions[index].isoTransactionDateTime}</Cell>
+    <Cell>{new Date(transactions[index].isoTransactionDateTime).toLocaleString('en-GB', { timeZone: 'UTC' })}</Cell>
 )
 
 const amount = (transactions) => (index) => (
@@ -30,7 +30,7 @@ export const Transaction = ({ transactions }) => (
         <Table 
             className="transaction" 
             numRows={transactions.length}
-            columnWidths={[150, 150, 150, 300]}>
+            columnWidths={[150, 100, 100, 300]}>
             <Column name="Date" cellRenderer={date(transactions)} />
             <Column name="Amount" cellRenderer={amount(transactions)} />
             <Column name="Type" cellRenderer={type(transactions)} />

@@ -23,10 +23,6 @@ export const Account = ({ accounts, getTransactions }) => (
 
 const enhance = compose(
   inject('store'),
-  branch(
-    ({ store }) => store.accountStore.accounts.length === 0,
-    renderNothing
-  ),
   mapProps(({ store }) => ({
     accounts: store.accountStore.accounts,
     getTransactions: e => () => store.transactionStore.getTransactions(e)
