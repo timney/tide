@@ -56,11 +56,20 @@ func readTransactions() {
 
 	for _, v := range transactions {
 		total = total + v.Amount
-		log.Println(total)
 		amou := strconv.FormatFloat(v.Amount, 'f', 2, 64)
 		tot := strconv.FormatFloat(total, 'f', 2, 64)
 		cre, _ := time.Parse(time.RFC3339, v.Created)
-		rows = append(rows, []string{cre.Format(time.UnixDate), amou, tot})
+
+		var in string
+		var out string
+		if v.Amount > 0 {
+			in = amou
+		}
+		if v.Amount < 0 {
+			out = amou
+		}
+
+		rows = append(rows, []string{cre.Format(time.UnixDate), in, out, tot})
 	}
 
 	printTable(rows, total)
@@ -69,8 +78,12 @@ func readTransactions() {
 func printTable(rows [][]string, total float64) {
 	tot := strconv.FormatFloat(total, 'f', 2, 64)
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Date", "Amount", "Total"})
-	table.SetFooter([]string{"", "Total", tot})
+	table.SetHeader([]string{"Date", "In", "Out", "Total"})
+	table.SetFooter([]string{"", "", "Total", tot})
+	table.SetColumnColor(tablewriter.Colors{tablewriter.FgYellowColor},
+		tablewriter.Colors{tablewriter.FgGreenColor},
+		tablewriter.Colors{tablewriter.FgRedColor},
+		tablewriter.Colors{tablewriter.FgMagentaColor})
 	table.AppendBulk(rows)
 	table.Render()
 }
