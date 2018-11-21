@@ -9,7 +9,7 @@ import (
 const server_port = "8899"
 const redirect_url = "http://localhost:" + server_port + "/code"
 const client_id = "TidePersonalApi"
-const auth_url = "https://api.tide.co/tide-backend/oauth/index.html?redirect_url=" + redirect_url + "&client_id=" + client_id
+const auth_url = "https://api.tide.co/tide-backend/oauth/index.html?redirect_url=" + redirect_url + "^&client_id=" + client_id
 
 // Open tide url in browser
 
@@ -31,6 +31,7 @@ func open(url string) error {
 }
 
 func openTideLogin() {
+	log.Println(auth_url)
 	err := open(auth_url)
 	if err != nil {
 		log.Println(err.Error())
