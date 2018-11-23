@@ -1,15 +1,19 @@
 import React from "react";
-import { H1 } from '@blueprintjs/core'
+import { H1, Navbar, Alignment } from '@blueprintjs/core'
 
 import './Header.css'
 
-export const Header = () => (
-  <div className="header">
-    <div className="title">
-        <H1>Tide Dashboard</H1>
-    </div>
-    <div className="sub-title">
+export const Header = () => {
+  return (
+    <Navbar>
+      <Navbar.Group align={Alignment.LEFT}>
+        <Navbar.Heading>
+          Tide dashboard
+        </Navbar.Heading>
+      </Navbar.Group>
+      <Navbar.Group align={Alignment.RIGHT}>
         <a href="http://github.com/timney/tide">github.com/timney/tide</a>
-    </div>
-  </div>
-)
+      </Navbar.Group>
+    </Navbar>
+  )
+}

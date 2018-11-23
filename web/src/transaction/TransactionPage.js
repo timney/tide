@@ -23,20 +23,23 @@ const desc = (transactions) => (index) => (
 
 const descHeader = () => <ColumnHeaderCell name={"Description"} />
 
+const Branch = (test, todo) => Wrapped => props => test(props) ? todo() : <Wrapped {...props} />
 
 export const Transaction = ({ transactions }) => (
-    <div>
-        <H4>Transactions</H4>
-        <Table 
-            className="transaction" 
-            numRows={transactions.length}
-            columnWidths={[150, 100, 100, 300]}>
-            <Column name="Date" cellRenderer={date(transactions)} />
-            <Column name="Amount" cellRenderer={amount(transactions)} />
-            <Column name="Type" cellRenderer={type(transactions)} />
-            <Column columnHeaderCellRenderer={descHeader} cellRenderer={desc(transactions)} />
-        </Table>
-    </div>
+    <React.Fragment>
+        <div className="transactions">
+            <H4>Transactions</H4>
+            <Table 
+                className="transaction" 
+                numRows={transactions.length}
+                columnWidths={[150, 100, 100, 300]}>
+                <Column name="Date" cellRenderer={date(transactions)} />
+                <Column name="Amount" cellRenderer={amount(transactions)} />
+                <Column name="Type" cellRenderer={type(transactions)} />
+                <Column columnHeaderCellRenderer={descHeader} cellRenderer={desc(transactions)} />
+            </Table>
+        </div>
+    </React.Fragment>
 )
 
 const enhance = compose(
@@ -44,7 +47,14 @@ const enhance = compose(
     mapProps(({ store }) => ({
         transactions: store.transactionStore.transactions
     })),
-    observer
+    observer,
+    Branch(
+        props => {
+            console.log('test', props)
+            return props.transactions && !props.transactions.length
+        },
+        () => null
+    ),
 )
 
 export const TransactionPage = enhance(Transaction)

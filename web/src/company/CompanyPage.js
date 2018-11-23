@@ -1,24 +1,37 @@
-import React from "react";
-import { observer, inject } from "mobx-react";
-import { Card, Button, H5, H4 } from '@blueprintjs/core'
+import React from "react"
+import { observer, inject } from "mobx-react"
+import { Tree, Classes } from '@blueprintjs/core'
 import { compose, mapProps } from 'recompose'
 
 import './CompanyPage.css'
 
-export const Company = ({ companies, getAccounts }) => (
+const mapToTree = accounts => c => ({
+    label: c.name,
+    id: c.companyId,
+    hasCaret: true,
+    path: [1],
+    isExpanded: !!accounts.length,
+    secondaryLabel: 'Company',
+    icon: 'office',
+    childNodes: accounts.map(mapToChild)
+})
+
+const mapToChild = a => ({
+    id: a.accountId,
+    label: a.name,
+    secondaryLabel: 'Account',
+    isAccount: true,
+    icon: 'bank-account'
+})
+
+export const Company = ({ companies, accounts, getAccounts, getTransactions }) => (
   <div>
-    <H4>Companies</H4>
     <div className="company">
-        {companies.map(c => (
-            <Card interactive key={c.companyId}>
-                <H5>{c.name}</H5>
-                <p>{c.number}</p>
-                <p>{c.vatNumber}</p>
-                <Button onClick={() => getAccounts(c.companyId)}>
-                    Go
-                </Button>
-            </Card>
-        ))}
+        <Tree
+            className={`${Classes.ELEVATION_0} tree`}
+            contents={companies.map(mapToTree(accounts))}
+            onNodeClick={(node) => !node.isAccount ? getAccounts(node.id) : getTransactions(node.id)}
+        />
     </div>
   </div>
 );
@@ -27,7 +40,9 @@ const enhance = compose(
     inject('store'),
     mapProps(({ store }) => ({
         companies: store.companyStore.companies,
-        getAccounts: e => store.accountStore.getAccounts(e)
+        accounts: store.accountStore.accounts,
+        getAccounts: e => store.accountStore.getAccounts(e),
+        getTransactions: e => store.transactionStore.getTransactions(e)
     })),
     observer
 )

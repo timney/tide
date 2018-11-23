@@ -4,3 +4,7 @@ body {
 .home {
     padding: 1em;
 }
+
+.main {
+    display: flex;
+}

@@ -11,8 +11,9 @@ func main() {
 
 func loadApp() {
 	go startServer()
-	if !hasAccessTokens() {
-		openTideLogin()
-	}
+	// if !hasAccessTokens() {
+	// 	openTideLogin()
+	// }
+	openWebApp()
 	select {}
 }

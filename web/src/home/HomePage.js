@@ -11,9 +11,10 @@
   export const Home = ({ store }) => (
     <div className="home">
       <Header />
-      <CompanyPage />
-      <AccountPage />
-      <TransactionPage />
+      <div className="main">
+        <CompanyPage />
+        <TransactionPage />
+      </div>
     </div>
   )
 
