@@ -40,8 +40,12 @@ func openTideLogin() {
 }
 
 func openWebApp() {
-	log.Println(web_app)
-	err := open(web_app)
+	var adr = web_app
+	if !hasAccessTokens() {
+		adr = web_app + "/login"
+	}
+	log.Println(adr)
+	err := open(adr)
 	if err != nil {
 		log.Println(err.Error())
 	}

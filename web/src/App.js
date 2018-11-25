@@ -4,6 +4,7 @@ import { Provider } from 'mobx-react'
 
 import { RootStore } from './store/root'
 import { HomePage } from './home/HomePage'
+import { LoginPage } from './login/LoginPage'
 
 import 'normalize.css/normalize.css'
 import '@blueprintjs/icons/lib/css/blueprint-icons.css'
@@ -16,7 +17,12 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-          <HomePage />
+        <Router>
+          <div>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/login" exact component={LoginPage} />
+          </div>
+        </Router>
       </Provider>
     )
   }
