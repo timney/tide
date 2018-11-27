@@ -9,7 +9,7 @@
   import './HomePage.css'
 
   export const Home = ({ store }) => (
-    <div className="home">
+    <div>
       <Header />
       <div className="main">
         <CompanyPage />

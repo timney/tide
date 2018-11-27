@@ -10,6 +10,7 @@ import 'normalize.css/normalize.css'
 import '@blueprintjs/icons/lib/css/blueprint-icons.css'
 import '@blueprintjs/core/lib/css/blueprint.css'
 import '@blueprintjs/table/lib/css/table.css'
+import "./App.css"
 
 const store = new RootStore()
 
@@ -18,7 +19,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div>
+          <div class="home">
             <Route path="/" exact component={HomePage} />
             <Route path="/login" exact component={LoginPage} />
           </div>

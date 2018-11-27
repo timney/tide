@@ -12,7 +12,9 @@ export const LoginPage = () => {
     <div>
       <h1>Login</h1>
       <Callout title="Authorise">
-        Allow access to your Tide account to proceed
+        <p>
+          Allow access to your Tide account to proceed
+        </p>
         <Button onClick={() => window.location = auth_url}>
             Authorise
         </Button>
