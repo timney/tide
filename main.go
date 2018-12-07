@@ -10,7 +10,9 @@ func main() {
 }
 
 func loadApp() {
+	fmt.Println("starting server...")
 	go startServer()
+	fmt.Println("opening web app")
 	openWebApp()
 	select {}
 }

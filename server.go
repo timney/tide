@@ -37,6 +37,9 @@ func handleAuthCode(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println(code)
 	getAccessToken(code)
+
+	// redirect
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
 
 var companies []byte

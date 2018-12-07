@@ -7,7 +7,6 @@ export class CompanyStore {
 
     constructor(rootstore){
         this.rootStore = rootstore
-        this.getCompanies()
     }
 
     getCompanies() {
