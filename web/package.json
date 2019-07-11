@@ -14,7 +14,7 @@
   "dependencies": {
     "@blueprintjs/core": "^3.7.0",
     "@blueprintjs/table": "^3.2.0",
-    "@elastic/eui": "^4.5.2",
+    "@elastic/eui": "^7.0.0",
     "@material-ui/core": "^3.2.2",
     "inferno": "^6.0.3",
     "mobx": "^5.5.0",
